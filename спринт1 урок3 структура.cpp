@@ -13,12 +13,6 @@ struct DocumentContent {               //структура для докуме�
 };
 DocumentContent document_content;
 
-
-
-
-
-
-
 const int MAX_RESULT_DOCUMENT_COUNT = 5;
 
 string ReadLine() {
