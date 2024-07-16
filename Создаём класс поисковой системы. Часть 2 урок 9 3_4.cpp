@@ -162,9 +162,9 @@ class SearchServer {
     
 };
   // считывает из cin стоп-слова и документ и возвращает настроенный экземпляр поисковой системы
-SearchServer CreateSearchServer() {
+//SearchServer CreateSearchServer() {
     
-} 
+//} ;
 
 
 int main() {
