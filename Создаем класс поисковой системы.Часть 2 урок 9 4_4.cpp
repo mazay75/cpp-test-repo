@@ -172,7 +172,7 @@ class SearchServer {
     }
     return words;
 }
-
+//будет возвращать релевантность документа,т.е. сколько слов из запроса совпадают со словами из документа
 static int MatchDocument(const DocumentContent& content, const set<string>& query_words) {
     if (query_words.empty()) {
         return 0;
