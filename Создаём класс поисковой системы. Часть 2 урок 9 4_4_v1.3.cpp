@@ -87,7 +87,7 @@ bool HasDocumentGreaterRelevance(const Document& lhs, const Document& rhs) {
     return query_words;
 }
 
-int MatchDocument(const DocumentContent& content, const set<string>& query_words) {
+int MatchDocument(const DocumentContent& content, const set<string>& query_words) {//будет возвращать релевантность документа
     if (query_words.empty()) {
         return 0;
     }
@@ -114,7 +114,10 @@ vector<Document> FindAllDocuments(const vector<DocumentContent>& documents,
     }
     return matched_documents;
 }
-
+// Возвращает самые релевантные документы в виде вектора пар {id, релевантность} (по началу так было)
+//documents-хранит идентификаторы и содержимое документов,
+//stop_words-множество стоп-слов,
+//raw_query-сам запрос
 vector<Document> FindTopDocuments(const vector<DocumentContent>& documents,
                                   const set<string>& stop_words, const string& raw_query) {
     const set<string> query_words = ParseQuery(raw_query, stop_words);
@@ -164,7 +167,7 @@ class SearchServer {
     return words;
 }
 
-int MatchDocument(const DocumentContent& content, const set<string>& query_words) {
+static int MatchDocument(const DocumentContent& content, const set<string>& query_words) {//будет возвращать релевантность документа
     if (query_words.empty()) {
         return 0;
     }
@@ -223,3 +226,4 @@ int main() {
              << endl;
     }
 }*/
+//продолжить на работе
