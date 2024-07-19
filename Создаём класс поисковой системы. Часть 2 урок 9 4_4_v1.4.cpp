@@ -9,10 +9,15 @@ using namespace std;
 
 const int MAX_RESULT_DOCUMENT_COUNT = 5;
 
-   struct DocumentContent {
+   /*struct DocumentContent {
     int id = 0;
     vector<string> words;
-};
+};*/
+
+ struct Document{
+    int id = 0;
+    int relevance = 0;
+    };
 
 string ReadLine() {
     string s;
@@ -146,6 +151,22 @@ class SearchServer {
     }
    // return stop_words;
 }
+
+// Возвращает самые релевантные документы в виде вектора пар {id, релевантность} (по началу так было)
+//documents-хранит идентификаторы и содержимое документов,
+//stop_words-множество стоп-слов,
+//raw_query-сам запрос
+vector<Document> FindTopDocuments(const vector<DocumentContent>& documents_,
+                                  const set<string>& stop_words_, const string& raw_query) {
+    const set<string> query_words = ParseQuery(raw_query, stop_words_);
+    auto matched_documents = FindAllDocuments(documents_, query_words);
+
+    sort(matched_documents.begin(), matched_documents.end(), HasDocumentGreaterRelevance);
+    if (matched_documents.size() > MAX_RESULT_DOCUMENT_COUNT) {
+        matched_documents.resize(MAX_RESULT_DOCUMENT_COUNT);
+    }
+    return matched_documents;
+}
     
  private:
  
@@ -157,10 +178,7 @@ class SearchServer {
     vector<DocumentContent> documents_;
     set<string> stop_words_;
 
-     struct Document{
-    int id = 0;
-    int relevance = 0;
-    };
+    
     
     vector<DocumentContent> documents_;
     set<string> stop_words_;
@@ -173,6 +191,18 @@ class SearchServer {
         }
     }
     return words;
+}
+
+set<string> ParseQuery(const string& text, const set<string>& stop_words) {
+    set<string> query_words;
+    for (const string& word : SplitIntoWordsNoStop(text, stop_words)) {
+        query_words.insert(word);
+    }
+    return query_words;
+}
+
+bool HasDocumentGreaterRelevance(const Document& lhs, const Document& rhs) {
+    return lhs.relevance > rhs.relevance;
 }
 
 static int MatchDocument(const DocumentContent& content, const set<string>& query_words) {//будет возвращать релевантность документа
