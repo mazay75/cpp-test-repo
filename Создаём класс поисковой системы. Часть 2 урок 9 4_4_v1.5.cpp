@@ -152,6 +152,10 @@ class SearchServer {
    // return stop_words;
 }
 
+bool HasDocumentGreaterRelevance(const Document& lhs, const Document& rhs) {
+    return lhs.relevance > rhs.relevance;
+}
+
 // Возвращает самые релевантные документы в виде вектора пар {id, релевантность} (по началу так было)
 //documents-хранит идентификаторы и содержимое документов,
 //stop_words-множество стоп-слов,
@@ -199,9 +203,7 @@ set<string> ParseQuery(const string& text, const set<string>& stop_words) {
     return query_words;
 }
 
-bool HasDocumentGreaterRelevance(const Document& lhs, const Document& rhs) {
-    return lhs.relevance > rhs.relevance;
-}
+
 
 static int MatchDocument(const DocumentContent& content, const set<string>& query_words) {//будет возвращать релевантность документа
     if (query_words.empty()) {
