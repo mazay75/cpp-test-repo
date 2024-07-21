@@ -64,9 +64,9 @@ class SearchServer {
     }
     
     void SetStopWords(const string& text1) {// делает набор стоп-слов из текстовой строки
-    set<string> stop_words;
+    
     for (const string& word : SplitIntoWords(text1)) {
-        stop_words.insert(word);
+        stop_words_.insert(word);
     }
    // return stop_words;
 }
@@ -95,7 +95,7 @@ vector<Document> FindTopDocuments(const string& raw_query) {
     };
     
     vector<DocumentContent> documents_;
-    set<string> stop_words_;
+   set<string> stop_words_;
     
     vector<string> SplitIntoWordsNoStop(const string& text, const set<string>& stop_words) {//разбивает текст на слова, исключая из них слова из стоп-списка,
     // и возвращает то, что осталось. Разобранный на слова документ добавляется в вектор documents_
@@ -163,18 +163,13 @@ return search_server;
 };
 
 
-    
-
-
-\
 int main() {
     // Создаём поисковую систему
     SearchServer search_server = CreateSearchServer();
      const string query = ReadLine();
      
     for (auto [document_id, relevance] : search_server.FindTopDocuments( query)) {
-        cout << "{ document_id = "s << document_id << ", relevance = "s << relevance << " }"s
-             << endl;
+        cout << "{ document_id = "s << document_id << ", relevance = "s << relevance << " }"s << endl;
     }
     return 0;
 }
