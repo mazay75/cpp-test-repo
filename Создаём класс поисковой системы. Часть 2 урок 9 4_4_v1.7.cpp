@@ -169,7 +169,7 @@ return search_server;
     
 
 
-
+\
 int main() {
     // Создаём поисковую систему
     SearchServer search_server = CreateSearchServer();
