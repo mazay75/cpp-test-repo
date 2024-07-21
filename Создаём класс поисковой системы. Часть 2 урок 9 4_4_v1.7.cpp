@@ -63,9 +63,9 @@ class SearchServer {
     documents_.push_back({document_id, words});
     }
     
-    void SetStopWords(const string& text) {
+    void SetStopWords(const string& stop_words_) {
     set<string> stop_words;
-    for (const string& word : SplitIntoWords(text)) {
+    for (const string& word : SplitIntoWords(stop_words_)) {
         stop_words.insert(word);
     }
    // return stop_words;
