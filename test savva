@@ -1,0 +1,5 @@
+   void SetStopWords(const string& stop_words_) {
+    set<string> stop_words;
+    for (const string& word : SplitIntoWords(stop_words_)) {
+        stop_words.insert(word);
+    }
