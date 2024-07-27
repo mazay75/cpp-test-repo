@@ -6,13 +6,13 @@
 
 using namespace std;
 
-void Print(const string words ) {
+void Print(string& words ) {
    cout<<words<<endl;
     }
 
 
 int main() {
-    string words1;
+    string words1 = "";
     cin>>words1;
     Print (words1);
     return 0;
