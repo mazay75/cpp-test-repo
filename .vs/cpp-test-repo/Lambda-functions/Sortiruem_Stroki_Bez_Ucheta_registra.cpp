@@ -31,5 +31,34 @@
 
 using namespace std;
 
+string ReadLine() {
+        string s;
+    getline(cin, s);
+    return s;
+}
+
+vector<string> SplitIntoWords(const string& text) {//раскидывает текстовую строку на слова  и делает вектор слов
+    vector<string> words;
+    string word;
+    for (const char c : text) {
+        if (c == ' ') {
+            if (!word.empty()) {
+                words.push_back(word);
+                word.clear();
+            }
+        } else {
+            word += c;
+        }
+    }
+    if (!word.empty()) {
+        words.push_back(word);
+    }
+
+    return words;
+}
+
 int main() {
+         const string query = ReadLine();
+         vector <string> query_vector=SplitIntoWords(query);
+     return 0;
 }
