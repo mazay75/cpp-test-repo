@@ -31,9 +31,15 @@
 
 using namespace std;
 
-string ReadLine() {
+string ReadLine1() {
         string s;
-    getline(cin, s);
+    int result=0;
+    cin>>result;
+    
+    for (int i=0, i < result, ++i) {
+        cin >>s;
+    }
+
     return s;
 }
 
@@ -57,8 +63,25 @@ vector<string> SplitIntoWords(const string& text) {//раскидывает те
     return words;
 }
 
+string ToLowerCase(string s) {
+    for (char& ch : s) {
+        ch = tolower(static_cast<unsigned char>(ch));
+    }
+    return s;
+}
+
 int main() {
-         const string query = ReadLine();
+    
+         const string query = ReadLine1();
          vector <string> query_vector=SplitIntoWords(query);
+         
+
+          sort(query_vector.begin(), query_vector.end(), [](const string left, const string right) {
+            return ToLowerCase(left)<ToLowerCase(right);
+          });
+    for (const string& entry : query_vector) {
+        cout << entry << ' ';
+    }
+cout<<endl;
      return 0;
 }
