@@ -27,21 +27,23 @@
 #include <vector>
 #include <cctype> // содержит функцию tolower.
 #include <numeric>
-
+#include <sstream>
 
 using namespace std;
 
-string ReadLine1() {
-        string s;
-    int result=0;
-    cin>>result;
-    
-    for (int i=0, i < result, ++i) {
-        cin >>s;
-    }
-
+string ReadLine() {
+    string s;
+    getline(cin, s);
     return s;
 }
+
+/*int ReadLineWithNumber() {
+    int result = 0;
+    cin >> result;
+    ReadLine();
+    return result;
+}*/
+
 
 vector<string> SplitIntoWords(const string& text) {//раскидывает текстовую строку на слова  и делает вектор слов
     vector<string> words;
@@ -59,7 +61,7 @@ vector<string> SplitIntoWords(const string& text) {//раскидывает те
     if (!word.empty()) {
         words.push_back(word);
     }
-
+    
     return words;
 }
 
@@ -72,9 +74,12 @@ string ToLowerCase(string s) {
 
 int main() {
     
-         const string query = ReadLine1();
+         const string query = ReadLine();
          vector <string> query_vector=SplitIntoWords(query);
-         
+         string S=query_vector[0];
+         int N=stoi(S);
+        query_vector.erase(query_vector.begin());
+        query_vector.resize(N);
 
           sort(query_vector.begin(), query_vector.end(), [](const string left, const string right) {
             return ToLowerCase(left)<ToLowerCase(right);
