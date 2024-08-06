@@ -5,29 +5,12 @@
 #include <utility>
 #include <vector>
 #include <cctype> // содержит функцию tolower.
+#include <numeric>
+#include <sstream>
 
 using namespace std;
 
-// Приводит строку к нижнему регистру
-string ToLowerCase (string s) {
-    for (char& ch: s) {
-        ch=tolower(static_cast<unsigned char>(ch));
-    }
-    return s;
-}
-
-
-
-
-
-
-
-int main() {
-    vector<string> animals{ "Zebra"s, "Apple"s, "cat"s, "dog", "crocodile"s, "tiger"s };
-    sort(animals.begin(), animals.end(), [] (const string& left, const string& right){
-        return ToLowerCase(left)<ToLowerCase(right);
-    });
-    for (const string& animal : animals) {
-        cout << animal << ' ';
-    }
+int main(){
+const vector<int> v = {1, 3, 5, 2, 6, 7, 10, 2, 3};
+cout << count_if(begin(v), end(v), [](int x) { return x > 5; }) << endl; 
 }
