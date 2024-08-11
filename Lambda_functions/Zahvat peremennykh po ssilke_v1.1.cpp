@@ -57,9 +57,9 @@ int CountAndAddNewDogs(const vector<string>& new_dogs, const map<string, int>& m
                         return count_if(new_dogs.begin(), new_dogs.end(),[&max_amount, &new_dogs, &shelter](const string& w){
                             if (shelter.count(w)==0) {shelter[w]=1;} 
                             else {++shelter[w];}
-                            for (const auto& entry: shelter){
+                            /*for (const auto& entry: shelter){
                                 cout<<entry.first<<"--"<<entry.second<<endl;
-                            }
+                            }*/
                             if (shelter[w] <=max_amount.at(w)) return true;
                             return false;
                         } );
