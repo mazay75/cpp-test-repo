@@ -55,11 +55,15 @@ using namespace std;
 int CountAndAddNewDogs(const vector<string>& new_dogs, const map<string, int>& max_amount,
                        map<string, int>& shelter) {
                         count_if(new_dogs.begin(), new_dogs.end(),[max_amount, &new_dogs, &shelter](const string& w){
-                            if (new_dogs.count(shelter.at(w))) {++shelter.at(w);}
-
+                            if (shelter.count(w)==0) {shelter[w]=1;} 
+                            else {++shelter[w];}
+                            for (const auto& entry: shelter){
+                                cout<<entry.first<<"--"<<entry.second<<endl;
+                            }
+                            if (shelter.at(w)<=max_amount.at(w)) return true;
+                            return false;
                         } )
-    
-}
+                       }
 
 int main() {
     map<string, int> shelter { //словарь shelter хранит текущее количество собак каждой породы
