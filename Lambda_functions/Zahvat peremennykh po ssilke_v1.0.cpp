@@ -62,7 +62,7 @@ int CountAndAddNewDogs(const vector<string>& new_dogs, const map<string, int>& m
                             }
                             if (shelter.at(w)<=max_amount.at(w)) return true;
                             return false;
-                        } )
+                        } );
                        }
 
 int main() {
