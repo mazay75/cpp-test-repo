@@ -55,7 +55,7 @@ int main() {
         }
     );
     
-    for (int i = 0; i < v.size(); ++i) {
+    for (int i = 0; i < static_cast<int> (v.size()); ++i) {
         
         cout << v[i] << ' ';
     }
