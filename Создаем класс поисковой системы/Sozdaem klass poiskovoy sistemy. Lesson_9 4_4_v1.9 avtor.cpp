@@ -1,3 +1,8 @@
+
+//Sozdaem klass poiskovoy sistemy. Часть 2 урок 9 4_4_v1.9 avtor
+
+
+
 #include <algorithm>
 #include <iostream>
 #include <set>
