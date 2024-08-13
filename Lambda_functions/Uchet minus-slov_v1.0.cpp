@@ -113,7 +113,6 @@ private:
     };
 
     vector<DocumentContent> documents_;
-
     set<string> stop_words_;
 
     bool IsStopWord(const string& word) const {

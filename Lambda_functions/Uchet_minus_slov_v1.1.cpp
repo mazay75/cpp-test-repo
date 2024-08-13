@@ -79,11 +79,7 @@ struct Document {
     int relevance;
 };
 
-struct Query {
-    vector<string> word_plus;
-    vector<string> word_minus;
 
-};
 
 class SearchServer {
 public:
@@ -104,7 +100,7 @@ public:
 //stop_words-множество стоп-слов,
 //raw_query-сам запрос
     vector<Document> FindTopDocuments(const string& raw_query) const {
-        const set<string> query_words = ParseQuery(raw_query);
+        const Query query_words = ParseQuery(raw_query);
         auto matched_documents = FindAllDocuments(query_words);
 
         sort(matched_documents.begin(), matched_documents.end(),
@@ -142,15 +138,21 @@ private:
         return words;
     }
 
-    set<string> ParseQuery(const string& text) const {
-        set<string> query_words;
+    struct Query {
+    set<string> words_plus;
+    set<string> words_minus;
+
+};
+
+    Query ParseQuery(const string& text) const {// разбивает текст на слова с учётом стоп-слов. стоп-слова не учитываются
+        Query query_words;
         for (const string& word : SplitIntoWordsNoStop(text)) {
-            query_words.insert(word);
+            query_words.words_plus.(word);
         }
         return query_words;
     }
 
-    vector<Document> FindAllDocuments(const set<string>& query_words) const {// Для каждого документа возвращает его релевантность и id
+    vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
         for (const auto& document : documents_) {
             const int relevance = MatchDocument(document, query_words);

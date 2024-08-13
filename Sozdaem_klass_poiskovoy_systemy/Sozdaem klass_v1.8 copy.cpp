@@ -108,7 +108,7 @@ vector<Document> FindTopDocuments(const string& raw_query) {
     return words;
 }
 
-set<string> ParseQuery(const string& text, const set<string>& stop_words) {
+set<string> ParseQuery(const string& text, const set<string>& stop_words) {// разбивает текст на слова с учётом стоп-слов. стоп-слова не учитываются
     set<string> query_words;
     for (const string& word : SplitIntoWordsNoStop(text, stop_words)) {
         query_words.insert(word);
