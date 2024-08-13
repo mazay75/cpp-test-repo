@@ -147,7 +147,10 @@ private:
     Query ParseQuery(const string& text) const {// разбивает текст на слова с учётом стоп-слов. стоп-слова не учитываются
         Query query_words;
         for (const string& word : SplitIntoWordsNoStop(text)) {
-            query_words.words_plus.insert(word);
+            if (word[0] == '-') {string stripped = word.substr(1); 
+                                    if (!IsStopWord(stripped)) { query_words.words_minus.insert(stripped);}
+                                }
+            else {query_words.words_plus.insert(word);}
         }
         return query_words;
     }
@@ -163,7 +166,7 @@ private:
         return matched_documents;
     }
 
-    static int MatchDocument(const DocumentContent& content, const set<string>& query_words) {//будет возвращать релевантность документа
+    static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
         if (query_words.empty()) {
             return 0;
         }
