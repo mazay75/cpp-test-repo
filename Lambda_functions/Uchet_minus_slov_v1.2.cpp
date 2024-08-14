@@ -147,12 +147,13 @@ private:
     Query ParseQuery(const string& text) const {// разбивает текст на слова с учётом стоп-слов. стоп-слова не учитываются
         Query query_words;
         for (const string& word : SplitIntoWordsNoStop(text)) {
-            if (word[0] == '-') {string stripped = word.substr(1); 
-                                    if (!IsStopWord(stripped)) { query_words.words_minus.insert(stripped);}
+            if (word[0] == '-') {string stripped = word.substr(1); //если слово с минусом, то минус убираем и записываем в strtipped
+                                    if (!IsStopWord(stripped)) { query_words.words_minus.insert(stripped);}//если это слово 
+                                    //не является стоп-словом, то определяем его в множество words_minus структуры query_words
                                 }
-            else {query_words.words_plus.insert(word);}
+            else {query_words.words_plus.insert(word);}// а если это плюс-слово, то в words_plus
         }
-        return query_words;
+        return query_words;//слова запроса без стоп-слов
     }
 
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
@@ -167,7 +168,7 @@ private:
     }
 
     static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
-        if (query_words.empty()) {
+        if (query_words.words_plus.empty() ) {
             return 0;
         }
         set<string> matched_words;
@@ -179,7 +180,8 @@ private:
                 matched_words.insert(word);
             }
         }
-        return static_cast<int>(matched_words.size());
+        return static_cast<int>(matched_words.size());// Преобразовываем беззнаковое число типа size_t в int используя static_cast<int>
+    
     }
 };
 
