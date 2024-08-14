@@ -153,7 +153,7 @@ private:
                                 }
             else {query_words.words_plus.insert(word);}// а если это плюс-слово, то в words_plus
         }
-        return query_words;//слова запроса без стоп-слов
+        return query_words;//слова запроса без стоп-слов, но уже с минус словами
     }
 
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
@@ -173,10 +173,11 @@ private:
         }
         set<string> matched_words;
         for (const string& word : content.words) {
-            if (matched_words.count(word) != 0) {
+            if (query_words.words_minus.count(word)) {return 0;}
+            else if (matched_words.count(word) != 0) {
                 continue;
             }
-            if (query_words.count(word) != 0) {
+            if (query_words.words_plus.count(word) != 0) {
                 matched_words.insert(word);
             }
         }
