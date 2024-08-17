@@ -128,7 +128,7 @@ public:
         const vector<string> words = SplitIntoWordsNoStop(document);
         for (const string& word: words){
 
-            word_to_documents_[{word, document_id}];
+            word_to_documents_[word]={document_id};
 
         }
 
