@@ -119,7 +119,7 @@ private:
         vector<string> words;
     };
 
-    vector<DocumentContent> documents_;
+    vector<DocumentContent> documents_; //Разобранный на слова документ и его id  добавляется в вектор documents_
 
     set<string> stop_words_;
 
@@ -166,7 +166,8 @@ private:
         }
         return matched_documents;
     }
-
+// content-это переменная структуры DocumentContent, которая содержит id документа и вектор слов, входящих в этот документ
+//query_words- это слова из посланного запроса. Разбиты в структуре на 2 множества: "+"-слова и "-"-слова
     static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
         if (query_words.words_plus.empty() ) {
             return 0;
