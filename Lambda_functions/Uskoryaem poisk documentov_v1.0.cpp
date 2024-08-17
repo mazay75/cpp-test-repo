@@ -123,12 +123,12 @@ public:
         }
     }
 
-    void AddDocument(int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
+    void AddDocument(map<string, set<int>> word_to_documents_, int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
         const vector<string> words = SplitIntoWordsNoStop(document);
         for (const string& word: words){
 
-            word_to_documents_.push_back({document_id, words});
+            word_to_documents_[{word, document_id}];
 
         }
 
@@ -156,7 +156,7 @@ public:
 
 private:
     
-    map<string, set<int>> word_to_documents_  //Ключи этого контейнера — слова из добавленных документов,а значения — id документов, в которых это слово встречается
+    map<string, set<int>> word_to_documents_; //Ключи этого контейнера — слова из добавленных документов,а значения — id документов, в которых это слово встречается
 
     set<string> stop_words_;
 
@@ -192,9 +192,22 @@ private:
         }
         return query_words;//слова запроса без стоп-слов, но уже с минус словами
     }
+/*В методе FindAllDocuments переберите в цикле все плюс-слова поискового запроса. Если в word_to_documents_ есть плюс-слово, увеличьте 
+в document_to_relevance релевантности всех документов, где это слово найдено. Так вы соберёте все документы, которые содержат плюс-слова запроса.*/
 
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
+         map <int, int> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
+                                              //документа. Она равна количеству плюс-слов, найденных в нём
+        for (const string& word: query_words.words_plus){
+            if (word_to_documents_.count(word)) { 
+                document_to_relevance[document_id, relevance++];
+
+            }
+        }
+
+
+
         for (const auto& document : documents_) {
             const int relevance = MatchDocument(document, query_words);
             if (relevance > 0) {
@@ -204,7 +217,7 @@ private:
         return matched_documents;
     }
 
-    static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
+    /*static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
         if (query_words.words_plus.empty() ) {
             return 0;
         }
@@ -221,7 +234,7 @@ private:
         return static_cast<int>(matched_words.size());// Преобразовываем беззнаковое число типа size_t в int используя static_cast<int>
     
     }
-};
+};*/
 
 SearchServer CreateSearchServer() {// считывает из cin стоп-слова и документ и возвращает настроенный экземпляр поисковой системы
     SearchServer search_server;
