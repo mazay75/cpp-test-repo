@@ -198,10 +198,13 @@ private:
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
          map <int, int> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
-         int relevance=0;                                     //документа. Она равна количеству плюс-слов, найденных в нём
+                                             //документа. Она равна количеству плюс-слов, найденных в нём
         for (const string& word: query_words.words_plus){
             if (word_to_documents_.count(word)) { 
-               document_to_relevance[document_id]=++relevance;
+                for (int relevance: word_to_documents_.at(word)){
+                     ++document_to_relevance[document_id];
+                }
+              
             }
 
             }
