@@ -13,11 +13,9 @@ using namespace std;
 
 
 int main() {
-    map<string, int> legs_count = {{"rabbit"s, 4}, {"dog"s, 4}, {"chicken"s, 2}};
-    const set<string> names = {"dog"s, "cat"s, "elephant"s};
-    for (const string& name : names) {
-        cout << name << " - "s << legs_count[name] << endl;
-    }
-     vector<int> prices = {100, 235, 333};
-    cout << prices.at(3) << endl;
+    cout<< "C++ is a general-purpose programming language with a bias towards systems programming that"s<<endl;
+    cout<< "- is a better C"s<<endl;
+    cout<< "- supports data abstraction"s<<endl;
+    cout<< "- supports object-oriented programming"s<<endl;
+    cout<< "- supports generic programming."s<<endl;
 } 
