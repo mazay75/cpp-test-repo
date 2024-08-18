@@ -201,7 +201,7 @@ private:
          int relevance=0;                                     //документа. Она равна количеству плюс-слов, найденных в нём
         for (const string& word: query_words.words_plus){
             if (word_to_documents_.count(word)) { 
-                ++relevance;
+               // ++document.relevance;
             }
 
             }
@@ -209,14 +209,14 @@ private:
 
 
 
-        for (const auto& document : documents_) {
+       /* for (const auto& document : documents_) {
             const int relevance = MatchDocument(document, query_words);
             if (relevance > 0) {
                 matched_documents.push_back({document.id, relevance});
             }
         }
         return matched_documents;
-    }
+    }*/
 
     /*static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
         if (query_words.words_plus.empty() ) {
@@ -259,3 +259,31 @@ int main() {
              << "relevance = "s << relevance << " }"s << endl;
     }
 }
+
+
+
+/*vector<Document> FindAllDocuments(const Query& query) const {
+        map<int, int> document_to_relevance;
+        for (const string& word : query.plus_words) {
+            if (word_to_documents_.count(word) == 0) {
+                continue;
+            }
+            for (const int document_id : word_to_documents_.at(word)) {
+                ++document_to_relevance[document_id];
+            }
+        }
+        for (const string& word : query.minus_words) {
+            if (word_to_documents_.count(word) == 0) {
+                continue;
+            }
+            for (const auto document_id : word_to_documents_.at(word)) {
+                document_to_relevance.erase(document_id);
+            }
+        }
+        vector<Document> matched_documents;
+        for (const auto &[document_id, relevance] : document_to_relevance) {
+            matched_documents.push_back({document_id, relevance});
+        }
+        return matched_documents;
+    }
+};*/
