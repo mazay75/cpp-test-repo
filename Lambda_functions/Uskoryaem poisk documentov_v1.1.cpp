@@ -123,8 +123,9 @@ public:
         }
     }
 
-    void AddDocument(map<string, set<int>> word_to_documents_, int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
+    void AddDocument( int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
+        map<string, set<int>> word_to_documents_;
         const vector<string> words = SplitIntoWordsNoStop(document);
         for (const string& word: words){
 
@@ -213,42 +214,19 @@ document_to_relevance останутся только подходящие до�
         for (const string& word: query_words.words_minus){
             if (word_to_documents_.count(word)) {
                 for (int document_id: word_to_documents_.at(word)){
-                    document_to_relevance.erase(document_id)
+                    document_to_relevance.erase(document_id);
                 }
             }
         }
-    }
-
-
-
-
-       /* for (const auto& document : documents_) {
-            const int relevance = MatchDocument(document, query_words);
-            if (relevance > 0) {
-                matched_documents.push_back({document.id, relevance});
+         for (const auto& [document_id, relevance] : document_to_relevance) {
+            if (relevance> 0) {
+                matched_documents.push_back({document_id, relevance});
             }
         }
         return matched_documents;
-    }*/
-
-    /*static int MatchDocument(const DocumentContent& content, const Query& query_words) {//будет возвращать релевантность документа
-        if (query_words.words_plus.empty() ) {
-            return 0;
-        }
-        set<string> matched_words;
-        for (const string& word : content.words) {
-            if (query_words.words_minus.count(word)) {return 0;}
-            else if (matched_words.count(word) != 0) {
-                continue;
-            }
-            if (query_words.words_plus.count(word) != 0) {
-                matched_words.insert(word);
-            }
-        }
-        return static_cast<int>(matched_words.size());// Преобразовываем беззнаковое число типа size_t в int используя static_cast<int>
-    
     }
-};*/
+};
+    
 
 SearchServer CreateSearchServer() {// считывает из cin стоп-слова и документ и возвращает настроенный экземпляр поисковой системы
     SearchServer search_server;
@@ -256,14 +234,13 @@ SearchServer CreateSearchServer() {// считывает из cin стоп-сл�
 
     const int document_count = ReadLineWithNumber();
     for (int document_id = 0; document_id < document_count; ++document_id) {
-        search_server.AddDocument(document_id, ReadLine());
+        search_server.AddDocument( document_id, ReadLine());
     }
 
     return search_server;
 }
 
 int main() {
-     // Создаём поисковую систему
     const SearchServer search_server = CreateSearchServer();
 
     const string query = ReadLine();
@@ -272,31 +249,3 @@ int main() {
              << "relevance = "s << relevance << " }"s << endl;
     }
 }
-
-
-
-/*vector<Document> FindAllDocuments(const Query& query) const {
-        map<int, int> document_to_relevance;
-        for (const string& word : query.plus_words) {
-            if (word_to_documents_.count(word) == 0) {
-                continue;
-            }
-            for (const int document_id : word_to_documents_.at(word)) {
-                ++document_to_relevance[document_id];
-            }
-        }
-        for (const string& word : query.minus_words) {
-            if (word_to_documents_.count(word) == 0) {
-                continue;
-            }
-            for (const auto document_id : word_to_documents_.at(word)) {
-                document_to_relevance.erase(document_id);
-            }
-        }
-        vector<Document> matched_documents;
-        for (const auto &[document_id, relevance] : document_to_relevance) {
-            matched_documents.push_back({document_id, relevance});
-        }
-        return matched_documents;
-    }
-};*/
