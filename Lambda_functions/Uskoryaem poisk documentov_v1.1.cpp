@@ -128,7 +128,7 @@ public:
         const vector<string> words = SplitIntoWordsNoStop(document);
         for (const string& word: words){
 
-            word_to_documents_[word]={document_id};
+            word_to_documents_.at(word).insert(document_id);
 
         }
 
@@ -194,6 +194,10 @@ private:
     }
 /*В методе FindAllDocuments переберите в цикле все плюс-слова поискового запроса. Если в word_to_documents_ есть плюс-слово, увеличьте 
 в document_to_relevance релевантности всех документов, где это слово найдено. Так вы соберёте все документы, которые содержат плюс-слова запроса.*/
+/*6. Исключите из результатов поиска все документы, в которых есть минус-слова. В методе FindAllDocuments переберите в цикле все минус-слова 
+поискового запроса. Если в word_to_documents_ есть минус-слово, удалите из document_to_relevance все документы с этим минус-словом. Так в 
+document_to_relevance останутся только подходящие документы.*/
+
 
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
@@ -201,14 +205,20 @@ private:
                                              //документа. Она равна количеству плюс-слов, найденных в нём
         for (const string& word: query_words.words_plus){
             if (word_to_documents_.count(word)) { 
-                for (int relevance: word_to_documents_.at(word)){
+                for (int document_id: word_to_documents_.at(word)){
                      ++document_to_relevance[document_id];
-                }
-              
-            }
-
+                }  
             }
         }
+        for (const string& word: query_words.words_minus){
+            if (word_to_documents_.count(word)) {
+                for (int document_id: word_to_documents_.at(word)){
+                    document_to_relevance.erase(document_id)
+                }
+            }
+        }
+    }
+
 
 
 
