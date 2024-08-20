@@ -123,7 +123,7 @@ public:
         }
     }
 
-    void AddDocument(map<string, set<int>> word_to_documents_, int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
+    void AddDocument(int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
         const vector<string> words = SplitIntoWordsNoStop(document);
         for (const string& word: words){
@@ -259,31 +259,3 @@ int main() {
              << "relevance = "s << relevance << " }"s << endl;
     }
 }
-
-
-
-/*vector<Document> FindAllDocuments(const Query& query) const {
-        map<int, int> document_to_relevance;
-        for (const string& word : query.plus_words) {
-            if (word_to_documents_.count(word) == 0) {
-                continue;
-            }
-            for (const int document_id : word_to_documents_.at(word)) {
-                ++document_to_relevance[document_id];
-            }
-        }
-        for (const string& word : query.minus_words) {
-            if (word_to_documents_.count(word) == 0) {
-                continue;
-            }
-            for (const auto document_id : word_to_documents_.at(word)) {
-                document_to_relevance.erase(document_id);
-            }
-        }
-        vector<Document> matched_documents;
-        for (const auto &[document_id, relevance] : document_to_relevance) {
-            matched_documents.push_back({document_id, relevance});
-        }
-        return matched_documents;
-    }
-};*/

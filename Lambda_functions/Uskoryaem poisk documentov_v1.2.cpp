@@ -125,14 +125,15 @@ public:
 
     void AddDocument( int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
-        map<string, set<int>> word_to_documents_;
+    
         const vector<string> words = SplitIntoWordsNoStop(document);
+    
         for (const string& word: words){
 
-            word_to_documents_.at(word).insert(document_id);
+            word_to_documents_[word].insert(document_id);
 
         }
-
+        
 
         
     }
@@ -209,6 +210,7 @@ document_to_relevance останутся только подходящие до�
                 for (int document_id: word_to_documents_.at(word)){
                      ++document_to_relevance[document_id];
                 }  
+                
             }
         }
         for (const string& word: query_words.words_minus){
@@ -216,14 +218,16 @@ document_to_relevance останутся только подходящие до�
                 for (int document_id: word_to_documents_.at(word)){
                     document_to_relevance.erase(document_id);
                 }
-            }
+             }
         }
          for (const auto& [document_id, relevance] : document_to_relevance) {
             if (relevance> 0) {
                 matched_documents.push_back({document_id, relevance});
-            }
-        }
+               }
+             }
         return matched_documents;
+        
+    
     }
 };
     
@@ -248,4 +252,5 @@ int main() {
         cout << "{ document_id = "s << document_id << ", "
              << "relevance = "s << relevance << " }"s << endl;
     }
+    return 0;
 }
