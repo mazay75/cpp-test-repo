@@ -71,6 +71,7 @@ word_to_document_freqs_, так и к каждому словарю, храня�
 #include <map>
 #include <cmath>
 
+
 using namespace std;
 
 const int MAX_RESULT_DOCUMENT_COUNT = 5;
@@ -110,7 +111,7 @@ vector<string> SplitIntoWords(const string& text) {//раскидывает те
 
 struct Document {
     int id;
-    int relevance;
+    double relevance;
 };
 
 
@@ -125,18 +126,18 @@ public:
 
     void AddDocument( int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
-    
         const vector<string> words = SplitIntoWordsNoStop(document);
-    
+        double TF=0.;
+        double size_word= static_cast <double> (words.size());
         for (const string& word: words){
 
-            word_to_documents_[word].insert(document_id);
 
-        }
-        
 
-        
+             word_to_document_freqs_[word].insert(document_id);
+        }   
     }
+
+    int document_count_ = 0;
 
     // Возвращает самые релевантные документы в виде вектора пар {id, релевантность} (по началу так было)
 //documents-хранит идентификаторы и содержимое документов,
@@ -158,7 +159,8 @@ public:
 
 private:
     
-    map<string, set<int>> word_to_documents_; //Ключи этого контейнера — слова из добавленных документов,а значения — id документов, в которых это слово встречается
+    map<string, map<int, double>> word_to_document_freqs_; //заменить словарь «слово → документы» на более сложную структуру,
+                                                 //которая сопоставляет каждому слову словарь «документ → TF
 
     set<string> stop_words_;
 
@@ -203,7 +205,7 @@ document_to_relevance останутся только подходящие до�
 
     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
-         map <int, int> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
+         map <int, double> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
                                              //документа. Она равна количеству плюс-слов, найденных в нём
         for (const string& word: query_words.words_plus){
             if (word_to_documents_.count(word)) { 
@@ -254,3 +256,4 @@ int main() {
     }
     return 0;
 }
+
