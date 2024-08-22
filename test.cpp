@@ -15,20 +15,21 @@ using namespace std;
 
 
 
-void Podschet(const vector<string>& words){
-for (const auto& word: words){
-    int i;
+void Podschet(vector<string> words){
+for (auto& word: words){
+   // int i=0;
     vector <string> temp;
     auto it=find(words.begin(),words.end(), word);
-    if (it!=words.end()) {
-        temp.push_back
-    
-
-
-
-    else cout <<"не совпало"<<endl;
+    if (it==words.end()) {cout<<"не совпало"<<endl;}
+    else cout<<words.at(it)<<endl;
+    //if (it==word) {
+     //   ++i;
+       // cout<<"совпало"<<i<<endl;
+      
+    }
+   // else cout <<"не совпало"<<endl;
 }
-}
+//}
 
 
 int main() {
