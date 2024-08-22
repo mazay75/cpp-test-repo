@@ -105,7 +105,6 @@ vector<string> SplitIntoWords(const string& text) {//раскидывает те
     if (!word.empty()) {
         words.push_back(word);
     }
-
     return words;
 }
 
