@@ -8,14 +8,30 @@
 #include <numeric>
 #include <sstream>
 #include <map>
+#include <cmath>
 
 using namespace std;
 
 
+
+
+void Podschet(const vector<string>& words){
+for (const auto& word: words){
+    int i;
+    vector <string> temp;
+    auto it=find(words.begin(),words.end(), word);
+    if (it!=words.end()) {
+        temp.push_back
+    
+
+
+
+    else cout <<"не совпало"<<endl;
+}
+}
+
+
 int main() {
-    cout<< "C++ is a general-purpose programming language with a bias towards systems programming that"s<<endl;
-    cout<< "- is a better C"s<<endl;
-    cout<< "- supports data abstraction"s<<endl;
-    cout<< "- supports object-oriented programming"s<<endl;
-    cout<< "- supports generic programming."s<<endl;
+    vector <string> words1 ={"dog"s,"cat"s,"dog"s,"vfg"s,"cat"s,"uyh"s,"jkl"s,"fghk"s,"tuikkhg"s};
+   Podschet (words1);
 } 
