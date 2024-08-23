@@ -126,12 +126,9 @@ public:
     void AddDocument( int document_id, const string& document) {// Метод AddDocument передаёт текст документа в функцию SplitIntoWordsNoStop
         //добавляет документ в поисковый индекс
         const vector<string> words = SplitIntoWordsNoStop(document);
-        double size_word= static_cast <double> (words.size());
-        map <string, double> word_freq;
+        double one_TF= 1.0/static_cast <double> (words.size());
         for (const string& word: words){
-            ++word_freq[word];
-            double TF=word_freq[word]/size_word;
-             word_to_document_freqs_[word].insert({document_id, TF});
+             word_to_document_freqs_[word][document_id] += one_TF;
         }    
     }
 
