@@ -15,9 +15,9 @@ using namespace std;
 
 
 
-void Podschet(vector<string> words){
-    map <string, int> temp;
-for ( auto& word: words){
+void Podschet( vector<string>& words){
+    map <string, double> temp;
+for ( const auto& word: words){
     ++temp[word];
 }
 
