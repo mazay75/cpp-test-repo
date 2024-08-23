@@ -16,23 +16,24 @@ using namespace std;
 
 
 void Podschet(vector<string> words){
-for (auto& word: words){
-   // int i=0;
-    vector <string> temp;
-    auto it=find(words.begin(),words.end(), word);
-    if (it==words.end()) {cout<<"не совпало"<<endl;}
-    else cout<<words.at(it)<<endl;
-    //if (it==word) {
-     //   ++i;
-       // cout<<"совпало"<<i<<endl;
-      
-    }
-   // else cout <<"не совпало"<<endl;
+    map <string, int> temp;
+for ( auto& word: words){
+    ++temp[word];
 }
-//}
+
+ for (const auto& [word, freq] : temp) {
+        cout << word << "\t" << freq << endl;    
+    }
+  
+}
+
 
 
 int main() {
-    vector <string> words1 ={"dog"s,"cat"s,"dog"s,"vfg"s,"cat"s,"uyh"s,"jkl"s,"fghk"s,"tuikkhg"s};
+    vector <string> words1 ={"DOG"s,"CAT"s,"DOG"s,"ELEFANT"s,"CAT"s,"LION"s,"JKL"s,"FGHK"s,"TUIKKHG"s};
    Podschet (words1);
 } 
+
+
+
+ 
