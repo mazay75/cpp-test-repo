@@ -129,7 +129,11 @@ public:
         double one_TF= 1.0/static_cast <double> (words.size());
         for (const string& word: words){
              word_to_document_freqs_[word][document_id] += one_TF;
-        }    
+        }  
+        int n;  
+        for (int i=0; i<static_cast <int> (word_to_document_freqs_.size()); ++i){
+            if (document_count_ < document_id) {++i; document_count_=i;}
+        }
     }
 
     int document_count_ = 0;
