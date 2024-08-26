@@ -130,12 +130,10 @@ public:
         for (const string& word: words){
              word_to_document_freqs_[word][document_id] += one_TF;
         }   
-        for (int i=0; i<static_cast <int> (word_to_document_freqs_.size()); ++i){
-            if (document_count_ <=document_id) {++i; document_count_=i;}
-        }
+        ++document_count_;
     }
 
-    int document_count_ = 0;
+    
 
     // Возвращает самые релевантные документы в виде вектора пар {id, релевантность} (по началу так было)
 //documents-хранит идентификаторы и содержимое документов,
@@ -156,11 +154,10 @@ public:
     }
 
 private:
-    
-    map<string, map<int, double>> word_to_document_freqs_; //заменить словарь «слово → документы» на более сложную структуру,
+    int document_count_ = 0;
+     map<string, map<int, double>> word_to_document_freqs_; //заменить словарь «слово → документы» на более сложную структуру,
                                                  //которая сопоставляет каждому слову словарь «документ → TF
-
-    set<string> stop_words_;
+     set<string> stop_words_;
 
     bool IsStopWord(const string& word) const {
         return stop_words_.count(word) > 0;
@@ -201,21 +198,30 @@ private:
 document_to_relevance останутся только подходящие документы.*/
 
 
-    vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
+     vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
          map <int, double> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
                                              //документа. Она равна количеству плюс-слов, найденных в нём
+         set<int> doc_id;                                    
+         int n=0;//кол-во док-ов, где встреч. слово  
+         double IDF=0.0;                                   
         for (const string& word: query_words.words_plus){
-            if (word_to_documents_.count(word)) { 
-                for (int document_id: word_to_documents_.at(word)){
-                     ++document_to_relevance[document_id];
+            if (word_to_document_freqs_.count(word)) { 
+                for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
+                    doc_id.insert(document_id);
+                    n=static_cast <int> (doc_id.size());
+                    IDF=log(document_count_/n);
+                }
+
+        for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
+                    document_to_relevance[document_id]+=(TF*IDF);
                 }  
                 
             }
         }
         for (const string& word: query_words.words_minus){
-            if (word_to_documents_.count(word)) {
-                for (int document_id: word_to_documents_.at(word)){
+            if (word_to_document_freqs_.count(word)) {
+                for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
                     document_to_relevance.erase(document_id);
                 }
              }
