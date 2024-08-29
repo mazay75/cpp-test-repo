@@ -130,22 +130,19 @@ private:
                 if (!IsStopWord(stripped)){
                     query_words.words_minus.insert(stripped);//если это слово 
                     //не является стоп-словом, то определяем его в множество words_minus структуры query_words
-                    }
-                                        
+                    }                          
              }
             else {
                 query_words.words_plus.insert(word);// а если это плюс-слово, то в words_plus
-            }
-                
+            }        
         }
         return query_words;//слова запроса без стоп-слов, но уже с минус словами
     }
 
+    double ComputeIdf(const string& word_plus) const {
+        return  log(static_cast <double> (document_count_)/static_cast <double> (word_to_document_freqs_.at(word_plus).size()));
+    }
 
-double ComputeIdf(const string& word_plus) const {
-    return  log(static_cast <double> (document_count_)/static_cast <double> (word_to_document_freqs_.at(word_plus).size()));
-
-}
      vector<Document> FindAllDocuments(const Query& query_words) const {
         vector<Document> matched_documents;
          map <int, double> document_to_relevance; 
@@ -188,11 +185,11 @@ SearchServer CreateSearchServer() {
 int main() {
     const SearchServer search_server = CreateSearchServer();
     const string query = ReadLine();
-    
+
     for (const auto& [document_id, relevance] : search_server.FindTopDocuments(query)) {
         cout << "{ document_id = "s << document_id << ", "
              << "relevance = "s << relevance << " }"s << endl;
     }
-    return 0;
+return 0;
 }
 
