@@ -118,6 +118,8 @@ struct Document {
 
 class SearchServer {
 public:
+
+  
     void SetStopWords(const string& text) {// делает набор стоп-слов из текстовой строки
         for (const string& word : SplitIntoWords(text)) {
             stop_words_.insert(word);
@@ -156,8 +158,9 @@ public:
 
 private:
     int document_count_ = 0;
-     map<string, map<int, double>> word_to_document_freqs_; //заменить словарь «слово → документы» на более сложную структуру,
+    map<string, map<int, double>> word_to_document_freqs_; //заменить словарь «слово → документы» на более сложную структуру,
                                                  //которая сопоставляет каждому слову словарь «документ → TF
+   
      set<string> stop_words_;
 
     bool IsStopWord(const string& word) const {
@@ -192,45 +195,40 @@ private:
         }
         return query_words;//слова запроса без стоп-слов, но уже с минус словами
     }
-/*В методе FindAllDocuments переберите в цикле все плюс-слова поискового запроса. Если в word_to_documents_ есть плюс-слово, увеличьте 
-в document_to_relevance релевантности всех документов, где это слово найдено. Так вы соберёте все документы, которые содержат плюс-слова запроса.*/
-/*6. Исключите из результатов поиска все документы, в которых есть минус-слова. В методе FindAllDocuments переберите в цикле все минус-слова 
-поискового запроса. Если в word_to_documents_ есть минус-слово, удалите из document_to_relevance все документы с этим минус-словом. Так в 
-document_to_relevance останутся только подходящие документы.*/
 
 
+double ComputeIdf(const string& word_plus) const {
+    return  log(static_cast <double> (document_count_)/static_cast <double> (word_to_document_freqs_.at(word_plus).size()));
+
+}
      vector<Document> FindAllDocuments(const Query& query_words) const {// Для каждого документа возвращает его релевантность и id
         vector<Document> matched_documents;
          map <int, double> document_to_relevance; //В ней ключ — id найденного документа, а значение — релевантность соответствующего 
                                              //документа. Она равна количеству плюс-слов, найденных в нём
-         set<int> doc_id;                                    
-         int n=0;//кол-во док-ов, где встреч. слово  
-         double IDF=0.0;                                   
-        for (const string& word: query_words.words_plus){
-            if (word_to_document_freqs_.count(word)) { 
-                for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
-                    doc_id.insert(document_id);
-                    n=static_cast <int> (doc_id.size());
-                    IDF=log(document_count_/n);
+                                                             
+        for ( const string& word_plus: query_words.words_plus){
+            if (word_to_document_freqs_.count(word_plus)) { 
+                for (const auto&[document_id, TF]: word_to_document_freqs_.at(word_plus)){
+                document_to_relevance[document_id]+=TF*ComputeIdf(word_plus);
                 }
-
-        for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
-                    document_to_relevance[document_id]+=(TF*IDF);
-                }  
-                
+   
             }
         }
         for (const string& word: query_words.words_minus){
             if (word_to_document_freqs_.count(word)) {
                 for (const auto&[document_id, TF]: word_to_document_freqs_.at(word)){
-                    document_to_relevance.erase(document_id);
+                   if (document_to_relevance.count(document_id)) {
+                     document_to_relevance.erase(document_id);
+                   }
+                   
+                    
                 }
              }
         }
          for (const auto& [document_id, relevance] : document_to_relevance) {
-            if (relevance> 0) {
+          
                 matched_documents.push_back({document_id, relevance});
-               }
+               
              }
         return matched_documents;
         
