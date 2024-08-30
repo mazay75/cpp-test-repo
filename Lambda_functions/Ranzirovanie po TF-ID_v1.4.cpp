@@ -70,8 +70,8 @@ public:
 //добавляет документ в поисковый индекс
     void AddDocument( int document_id, const string& document) {
         const vector<string> words = SplitIntoWordsNoStop(document);
-        double one_TF= 1.0/static_cast <double> (words.size());
-        for (const string& word: words){
+        double one_TF = 1.0/static_cast <double> (words.size());
+        for (const string& word : words){
              word_to_document_freqs_[word][document_id] += one_TF;
         }   
         ++document_count_;
@@ -150,7 +150,7 @@ private:
         for ( const string& word_plus: query_words.words_plus){
             if (word_to_document_freqs_.count(word_plus)) { 
                 for (const auto&[document_id, TF]: word_to_document_freqs_.at(word_plus)){
-                document_to_relevance[document_id]+=TF*ComputeIdf(word_plus);
+                    document_to_relevance[document_id]+=TF*ComputeIdf(word_plus);
                 }
             }
         }
