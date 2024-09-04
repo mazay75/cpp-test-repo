@@ -105,6 +105,7 @@ struct Document {
 };
 
 class SearchServer {
+
 public:
     void SetStopWords(const string& text) {
         for (const string& word : SplitIntoWords(text)) {
@@ -139,6 +140,7 @@ private:
     int document_count_ = 0;
     set<string> stop_words_;
     map<string, map<int, double>> word_to_document_freqs_;
+    map<int, int> document_ratings_;
 
     bool IsStopWord(const string& word) const {
         return stop_words_.count(word) > 0;
