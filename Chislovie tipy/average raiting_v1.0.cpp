@@ -226,6 +226,10 @@ private:
     }
 };
 
+        int ComputeAverageRating(const vector<int>& ratings) {
+    ...
+        } 
+
 SearchServer CreateSearchServer() {
     SearchServer search_server;
     search_server.SetStopWords(ReadLine());
@@ -242,8 +246,9 @@ int main() {
     const SearchServer search_server = CreateSearchServer();
 
     const string query = ReadLine();
-    for (auto [document_id, relevance] : search_server.FindTopDocuments(query)) {
+    for (auto [document_id, relevance, rating] : search_server.FindTopDocuments(query)) {
         cout << "{ document_id = "s << document_id << ", "s
-             << "relevance = "s << relevance << " }"s << endl;
+             << "relevance = "s << relevance << ", "s
+             <<"rating="s<<rating<<" }"s << endl;
     }
 }
