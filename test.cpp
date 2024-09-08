@@ -12,18 +12,41 @@
 
 using namespace std;
 
-   string ReadLine() {
-    string s;
-    getline(cin, s);
-    return s;
-   }
+  vector<int> SplitIntoRatings( string& textRatings) {
+    vector<int> raitings;
+    string raiting;
+    getline(cin, textRatings);
+    for (const auto& c : textRatings) {
+        if (c == ' ') {
+            if (!raiting.empty()) {
+                raitings.push_back(stoi (raiting));
+                raiting.clear();
+            }
+        } else {
+            raiting += c;
+        }
+    }
+    if (!raiting.empty()) {
+       raitings.push_back(stoi (raiting));
+    }
+      raitings.erase(raitings.begin());   
+    return raitings;
+}
+
+   
    
 
 int main(){
     
-    string stroka;
-   cout<< ReadLine()<< " test"<<endl;
-   
+   string text1;
+   getline(cin, text1);
+   vector<int> words1 = SplitIntoWords(text1);
+   for (auto raiting: words1) {
+      cout<<raiting<<endl;
+   }  
+
+   int rez = accumulate(words1.begin(), words1.end(), 0)/words1.size();
+   cout << rez<<endl;
 }
 
 

@@ -52,14 +52,17 @@ int ComputeAverageRating(const vector<int>& ratings) {
 выражений в C++.
 */
 
-#include <algorithm>
-#include <cmath>
+#include <algorithm>// Содержит функцию lexicographical_compare
 #include <iostream>
-#include <map>
 #include <set>
 #include <string>
 #include <utility>
 #include <vector>
+#include <cctype> // содержит функцию tolower.
+#include <numeric>
+#include <sstream>
+#include <map>
+#include <cmath>
 
 using namespace std;
 
@@ -76,6 +79,27 @@ int ReadLineWithNumber() {
     cin >> result;
     ReadLine();
     return result;
+}
+
+ vector<int> SplitIntoRatings( string& textRatings) {
+    vector<int> raitings;
+    string raiting;
+    getline(cin, textRatings);
+    for (const auto& c : textRatings) {
+        if (c == ' ') {
+            if (!raiting.empty()) {
+                raitings.push_back(stoi (raiting));
+                raiting.clear();
+            }
+        } else {
+            raiting += c;
+        }
+    }
+    if (!raiting.empty()) {
+       raitings.push_back(stoi (raiting));
+    }
+      raitings.erase(raitings.begin());   
+    return raitings;
 }
 
 vector<string> SplitIntoWords(const string& text) {
@@ -113,12 +137,13 @@ public:
         }
     }
 
-    void AddDocument(int document_id, const string& document) {
+    void AddDocument(int document_id, const string& document, const vector<int>& raitings) {
         ++document_count_;
         const vector<string> words = SplitIntoWordsNoStop(document);
         const double inv_word_count = 1.0 / words.size();
         for (const string& word : words) {
             word_to_document_freqs_[word][document_id] += inv_word_count;
+            document_ratings_[document_id] = ComputeAverageRating(raitings);
         }
     }
 
@@ -134,6 +159,11 @@ public:
             matched_documents.resize(MAX_RESULT_DOCUMENT_COUNT);
         }
         return matched_documents;
+    }
+
+    int ComputeAverageRating(const vector<int>& ratings) {
+        int rezAverage = accumulate(ratings.begin(), ratings.end(), 0)/ratings.size();
+        return rezAverage;
     }
 
 private:
@@ -199,6 +229,7 @@ private:
 
     vector<Document> FindAllDocuments(const Query& query) const {
         map<int, double> document_to_relevance;
+        map<int, int> document_ratings_;
         for (const string& word : query.plus_words) {
             if (word_to_document_freqs_.count(word) == 0) {
                 continue;
@@ -220,23 +251,24 @@ private:
 
         vector<Document> matched_documents;
         for (const auto &[document_id, relevance] : document_to_relevance) {
-            matched_documents.push_back({document_id, relevance});
+            matched_documents.push_back({document_id, relevance, raiting});
         }
         return matched_documents;
     }
 };
 
-        int ComputeAverageRating(const vector<int>& ratings) {
-    ...
-        } 
+    
+
 
 SearchServer CreateSearchServer() {
     SearchServer search_server;
     search_server.SetStopWords(ReadLine());
 
     const int document_count = ReadLineWithNumber();
+    string textRaiting;
+    const vector<int> raitings=SplitIntoRatings(textRaiting);
     for (int document_id = 0; document_id < document_count; ++document_id) {
-        search_server.AddDocument(document_id, ReadLine());
+        search_server.AddDocument(document_id, ReadLine(),raitings);
     }
 
     return search_server;
