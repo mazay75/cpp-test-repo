@@ -50,40 +50,25 @@ struct Document {
 };
 
 void PrintDocuments(vector<Document> documents, size_t skip_start, size_t skip_finish) {
-    // отсортировать документы и вывести не все
      sort(documents.begin(), documents.end(),
         [](const Document& lhs, const Document& rhs) { 
             return lhs.rating > rhs.rating;
         });
-        for (const auto& [id, rating]: documents) {
-            cout<<"{ id = "<<id<<", rating = "<<rating<<" }"<<endl;  
-        }
-            cout<<endl;
-
+       
      if (static_cast <uint64_t> (skip_start) > static_cast <uint64_t> (documents.size())) {
         skip_start = documents.size();
      }
-    for (uint64_t i=0; i < static_cast<uint64_t> (skip_start); ++i ) {
-            documents.erase(documents.begin() + i);
-    }
-    for (const auto& [id, rating]: documents) {
-            cout<<"{ id = "<<id<<", rating = "<<rating<<" }"<<endl;
-    }
-         cout<<endl;
-
      if (static_cast <uint64_t> (skip_finish) > static_cast <uint64_t> (documents.size())) {
         skip_finish = documents.size();
      }
-    for (uint64_t i=0; i < static_cast<uint64_t> (skip_finish); ++i ) {
-            documents.erase(documents.end() - i);
-    }
-    for (const auto& [id, rating]: documents) {
-            cout<<"{ id = "<<id<<", rating = "<<rating<<" }"<<endl;
+
+     for (size_t i=skip_start; i + skip_finish < documents.size(); ++i ) {
+            cout<<"{ id = "<<documents.at(i).id<<", rating = "<<documents.at(i).rating<<" }"<<endl;
      }
-        cout<<endl;
-        
-    
 }
+   
+    
+
 
 int main() {
     PrintDocuments({{100, 5}, {101, 7}, {102, -4}, {103, 9}, {104, 1}}, 1, 2);

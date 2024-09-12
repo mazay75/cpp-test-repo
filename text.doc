@@ -1,1 +1,2 @@
-cin >> ws;
+if(size_t i = skip_start; i < skip_finish - documents.size(); ++i)
+
