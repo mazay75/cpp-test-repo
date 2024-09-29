@@ -17,45 +17,38 @@
 
 using namespace std;
 
-enum class RequestType {
-    ADD,
-    REMOVE,
-    NEGATE
-};
 
-void ProcessRequest(
-        set<int>& numbers,
-        RequestType request_type,
-        int request_data) {
-    if (request_type == RequestType::ADD) {
-        numbers.insert(request_data);
-    } else if (request_type == RequestType::REMOVE) {
-        numbers.erase(request_data);
-    } else if (request_type == RequestType::NEGATE) {
-        if (numbers.count(request_data) == 1) {
-            numbers.erase(request_data);
-            numbers.insert(-request_data);
+
+
+int main() {
+ /* vector <string> some_vector = {"one"s, "two"s, "three"s, "for"s, "five"s} ;
+    for ( int i =0; i < static_cast <int> (some_vector.size()); ++i) {
+        if (i == static_cast <int> (some_vector.size() - 1)) {
+            cout<<some_vector.at(some_vector.size()-1);
         }
+        else cout<<some_vector.at(i)<<", ";
+        }
+    cout<<endl;*/
+
+/*    bool is_first = true;
+vector <string> some_vector = {"one"s, "two"s, "three"s, "for"s, "five"s} ;
+for (string s : some_vector) {
+    if (!is_first) {
+        cout << ", "s;
     }
+    is_first = false;
+    cout << s;
 }
 
+cout << endl;
+*/
 
-int main () {
-    set<int> numbers={3,4,5, -8};
-ProcessRequest(numbers, RequestType::ADD, 8);
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
+vector <int> some_vector = {2, 4, 5, 6, 7, 8, 9, 10};
+int k = 0;
+for (int number: some_vector) {
+    if (number % 2  == 0) {
+        k += 1;
+    }    
 }
-cout<< endl;
-ProcessRequest(numbers, RequestType::NEGATE, 8);
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
-}
-cout<< endl;
-ProcessRequest(numbers, RequestType::REMOVE, -8); 
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
-}
-cout<< endl;
-
+cout<<k<<endl;
 }
