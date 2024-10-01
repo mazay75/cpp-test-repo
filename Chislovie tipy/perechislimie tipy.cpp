@@ -110,7 +110,7 @@ struct Document {
     int id;
     double relevance;
     int rating;
-    DocumentStatus status
+    DocumentStatus status;
 };
 
 class SearchServer {
@@ -133,7 +133,7 @@ public:
 
     vector<Document> FindTopDocuments(const string& raw_query, DocumentStatus status) const {            
         const Query query = ParseQuery(raw_query);
-        auto matched_documents = FindAllDocuments(query);
+        auto matched_documents = FindAllDocuments(query, status);
         
         sort(matched_documents.begin(), matched_documents.end(),
              [](const Document& lhs, const Document& rhs) {
@@ -253,7 +253,7 @@ private:
 
         for (const auto& [document_id, status]: document_status_) {
             if (status !=document_status_.at(document_id)) {
-                matched_documents.erase(matched_documents.at(document_id))
+                matched_documents.erase(matched_documents.begin() + (document_id - 1));
             }
         }
         }
@@ -262,7 +262,7 @@ private:
 };
 
 
-SearchServer CreateSearchServer() {
+/*SearchServer CreateSearchServer() {
     SearchServer search_server;
     search_server.SetStopWords(ReadLine());
 
@@ -286,6 +286,7 @@ SearchServer CreateSearchServer() {
     
     return search_server;
 }
+*/
 
 void PrintDocument(const Document& document) {
     cout << "{ "s
