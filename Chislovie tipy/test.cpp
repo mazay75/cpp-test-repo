@@ -17,45 +17,12 @@
 
 using namespace std;
 
-enum class RequestType {
-    ADD,
-    REMOVE,
-    NEGATE
-};
-
-void ProcessRequest(
-        set<int>& numbers,
-        RequestType request_type,
-        int request_data) {
-    if (request_type == RequestType::ADD) {
-        numbers.insert(request_data);
-    } else if (request_type == RequestType::REMOVE) {
-        numbers.erase(request_data);
-    } else if (request_type == RequestType::NEGATE) {
-        if (numbers.count(request_data) == 1) {
-            numbers.erase(request_data);
-            numbers.insert(-request_data);
+int main() {
+    vector <int> some_vector = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    for (int& number1: some_vector) {
+        for (int number2: some_vector) {
+            cout<<(number2 = number2 * number1)<<" "s;
         }
+    cout<<endl;
     }
-}
-
-
-int main () {
-    set<int> numbers={3,4,5, -8};
-ProcessRequest(numbers, RequestType::ADD, 8);
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
-}
-cout<< endl;
-ProcessRequest(numbers, RequestType::NEGATE, 8);
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
-}
-cout<< endl;
-ProcessRequest(numbers, RequestType::REMOVE, -8); 
-for (const auto& entry: numbers) {
-    cout<< entry<<" "s;
-}
-cout<< endl;
-
 }
