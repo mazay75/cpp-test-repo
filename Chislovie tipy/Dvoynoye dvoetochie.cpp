@@ -26,10 +26,10 @@ using namespace std;
 
 
 class SearchServer {
-public:
+private:
     // перенесите сюда DocumentStatus
 
-    enum class DocumentStatus {
+     enum class DocumentStatus {
     ACTUAL = 1,
     IRRELEVANT = 2,
     BANNED = 3,
