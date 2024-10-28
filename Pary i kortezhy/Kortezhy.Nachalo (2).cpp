@@ -52,7 +52,7 @@ struct Document {
     Status status;
     double relevance;
     int rating;
-    const auto MakeKey () {
+    auto MakeKey () const {
          return tuple(status, rating * (-1), relevance * (-1));
         };
 };
