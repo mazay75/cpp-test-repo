@@ -221,7 +221,7 @@ private:
     double ComputeWordInverseDocumentFreq(const string& word) const {
         return log(documents_.size() * 1.0 / word_to_document_freqs_.at(word).size());
     }
-
+// для каждого документа возвращает его id и релевантность
     vector<Document> FindAllDocuments(const Query& query, DocumentStatus status) const {
         map<int, double> document_to_relevance;
         for (const string& word : query.plus_words) {
