@@ -1,75 +1,44 @@
-/*******************************************************************************
- * Copyright (c) 2009  - 2013 ACIN, fortiss GmbH
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *   Monika Wenger, Alois Zoitl,  Ingo Hengy
- *   - initial API and implementation and/or initial documentation
- *******************************************************************************/
-#include "FB_TON.h"
-#ifdef FORTE_ENABLE_GENERATED_SOURCE_CPP
-#include "FB_TON_gen.cpp"
-#endif
+IF xAlm=1 OR xFire=1 OR xAuto=0 THEN START1:=0; START2:=0; START:=0;
 
-DEFINE_FIRMWARE_FB(FB_TON, g_nStringIdFB_TON)
+ELSE
 
-const CStringDictionary::TStringId FB_TON::scm_anDataInputNames[] = {g_nStringIdIN, g_nStringIdPT};
+	IF (xStart OR wCmdStartStop=1 AND xRemote AND xAuto) OR (xAuto AND NOT xRemote) THEN START1:=1; END_IF;
+	IF ((xStop OR wCmdStartStop=2) AND xRemote AND xAuto) THEN START1:=0; END_IF;
+	
+	IF (xStartBlock AND xRemote AND xAuto AND (xStop OR wCmdStartStop=2)) THEN START2:=0; 	xFlag1:=1;
+	ELSE IF (xStartBlock=0 AND xRemote AND xAuto) THEN START2:=0;END_IF
+		
+	IF (xStartBlock AND xRemote AND xAuto) AND NOT xFlag1 THEN START2:=1; END_IF
 
-const CStringDictionary::TStringId FB_TON::scm_anDataOutputNames[] = {g_nStringIdQ, g_nStringIdET};
-const CStringDictionary::TStringId FB_TON::scm_aunDIDataTypeIds[] = {g_nStringIdBOOL, g_nStringIdTIME};
-const CStringDictionary::TStringId FB_TON::scm_aunDODataTypeIds[] = {g_nStringIdBOOL, g_nStringIdTIME};
+END_IF
+END_IF
 
-const TForteInt16 FB_TON::scm_anEIWithIndexes[] = {0};
-const TDataIOID FB_TON::scm_anEIWith[] = {0, 1, 255};
-const CStringDictionary::TStringId FB_TON::scm_anEventInputNames[] = {g_nStringIdREQ};
+IF xStartBlock=0 OR wCmdStartStop=1 OR xStart THEN xFlag1:=0;END_IF
 
-const TDataIOID FB_TON::scm_anEOWith[] = {0, 1, 255};
-const TForteInt16 FB_TON::scm_anEOWithIndexes[] = {0};
-const CStringDictionary::TStringId FB_TON::scm_anEventOutputNames[] = {g_nStringIdCNF};
+START:=START1 OR START2;
 
-const SFBInterfaceSpec FB_TON::scm_stFBInterfaceSpec = {
-  1,
-  scm_anEventInputNames,
-  scm_anEIWith,
-  scm_anEIWithIndexes,
-  1,
-  scm_anEventOutputNames,
-  scm_anEOWith,
-  scm_anEOWithIndexes,
-  2,
-  scm_anDataInputNames, scm_aunDIDataTypeIds,
-  2,
-  scm_anDataOutputNames, scm_aunDODataTypeIds,
-  0,
-  0
-};
+TON1(IN:=xStart OR wCmdStartStop=1,PT:=INT_TO_TIME(3000));
 
-void FB_TON::executeEvent(int pa_nEIID){
-  if(scm_nEventREQID == pa_nEIID){
-    if(st_IN() == false){
-      Q() = false;
-      ET() = 0;
-      risingEdge = false;
-      start = 0;
-    }
-    else{
-      if(risingEdge == false){
-        risingEdge = true;
-        start = NOW_MONOTONIC();
-      }else{
-        count = NOW_MONOTONIC() - start;
-        if(PT() <= count){
-          Q() = true;
-          ET() = PT();
-        }else{
-          ET() = count;
-        }
-      }
-    }
-    sendOutputEvent(scm_nEventCNFID);
-  }
-}
+IF TON1.Q THEN xStart:=0; wCmdStartStop:=0;
+END_IF
+
+TON2(IN:=xStop OR wCmdStartStop=2,PT:=INT_TO_TIME(3000));
+
+IF TON2.Q THEN xStop:=0; wCmdStartStop:=0;
+END_IF
+
+B_TRIG1(	CLK:=xAuto);
+IF B_TRIG1.Q THEN START1:=0; START2:=0; START:=0; 
+END_IF
+R_TRIG1 (CLK:=xRemote);
+IF R_TRIG1.Q THEN START1:=0; START2:=0; START:=0; 
+END_IF
+
+IF wCmdStartStop>3 THEN  wCmdStartStop:=0;	
+END_IF
+
+
+//БЛОК ДЛЯ УПРАВЛЕНИЯ  УСТАНОВКАМИ, ИМЕЮЩИМИ ОТДЕЛЬНЫЙ ПЕРЕКЛЮЧАТЕЛЬ "МУ-ДУ"
+// СО СБЛОКИРОВКОЙ 
+//ЗДЕСЬ ЕСЛИ ДАЖЕ БУДЕТ СИГНАЛ СО СБЛОКИРОВКИ И ПОСТУПИТ СИГНАЛ НА ВЫКЛЮЧЕНИЕ СО СКАДЫ ИЛИ С ПУЛЬТА, 
+//ТО УСТАНОВКА БУДЕТ ВЫКЛЮЧЕНА, ИГНОРИРУЯ при этом сигнал от сблокировки
