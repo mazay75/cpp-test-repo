@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 IF xAlm=1 OR xFire=1 OR xAuto=0 THEN START1:=0; START2:=0; START:=0;
 
 ELSE
@@ -42,3 +43,41 @@ END_IF
 // СО СБЛОКИРОВКОЙ 
 //ЗДЕСЬ ЕСЛИ ДАЖЕ БУДЕТ СИГНАЛ СО СБЛОКИРОВКИ И ПОСТУПИТ СИГНАЛ НА ВЫКЛЮЧЕНИЕ СО СКАДЫ ИЛИ С ПУЛЬТА, 
 //ТО УСТАНОВКА БУДЕТ ВЫКЛЮЧЕНА, ИГНОРИРУЯ при этом сигнал от сблокировки
+=======
+#include <algorithm>// Содержит функцию lexicographical_compare
+#include <iostream>
+#include <set>
+#include <string>
+#include <utility>
+#include <vector>
+#include <cctype> // содержит функцию tolower.
+#include <numeric>
+#include <sstream>
+#include <map>
+#include <cmath>
+#include <cstdint>
+#include <limits>
+
+using namespace std;
+
+struct AnimalObservation {
+        string name;
+        int days_ago;
+        int health_level;
+}; 
+
+int main() {
+ const tuple animal_info("Василий"s, 5, 4.1);
+
+string name;
+int age;
+double weight;
+
+tie(name, age, weight) = animal_info;
+cout << "Пациент "s << name
+    << ", "s << age << " лет"s
+    << ", "s << weight << " кг"s << endl;
+// Пациент Василий, 5 лет, 4.1 кг
+    return 0;
+}
+>>>>>>> 5093a6142cec6a74c1467b4ab20d4079e6cef95f
