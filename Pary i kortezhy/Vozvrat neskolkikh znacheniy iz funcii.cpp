@@ -2,7 +2,7 @@
 
 
 Задание
-Реализуйте метод GetDocumentCount:
+Реализуйте метод GetDocumentCount: //(Получить количество документов)
 
 int GetDocumentCount() const; 
 Метод должен возвращать количество документов в поисковой системе.
@@ -153,7 +153,7 @@ private:
     };
 
     set<string> stop_words_;
-    map<string, map<int, double>> word_to_document_freqs_;
+    map<string, map<int, double>> word_to_document_freqs_; //частота_передачи_слов_в_документ
     map<int, DocumentData> documents_;
 
     bool IsStopWord(const string& word) const {
