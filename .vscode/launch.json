@@ -1,5 +1,30 @@
 {
     "configurations": [
+        {
+            "name": "(gdb) Запустить",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "Введите имя программы, например: ${workspaceFolder}/a.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/path/to/gdb",
+            "setupCommands": [
+                {
+                    "description": "Включить автоматическое форматирование для gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Задать для варианта приложения дизассемблирования значение Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
         
         {
             "name": "(gdb) Запустить",
@@ -262,7 +287,7 @@
             "request": "launch",
             "type": "extensionHost"
         },
-        {},
+       
         {
             "type": "cmake",
             "request": "launch",
@@ -299,11 +324,7 @@
             "url": "http://localhost:8080",
             "webRoot": "${workspaceFolder}"
         },
-        {
-            "name": "(Windows) Подключить",
-            "type": "cppvsdbg",
-            "request": "attach"
-        },
+        
         {
             "name": "(Windows) Запустить",
             "type": "cppvsdbg",
