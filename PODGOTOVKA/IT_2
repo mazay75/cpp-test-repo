@@ -1,0 +1,12 @@
+
+#include <iostream>
+
+using namespace std;
+/// @brief 
+/// @return 
+int main() {
+    cout << "Hello, Module2!" << endl;
+    return 0;
+}
+
+
