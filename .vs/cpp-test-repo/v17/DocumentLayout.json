@@ -1,5 +1,6 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "WorkspaceRootPath": "C:\\Users\\SERGSYSTH\\source\\repos\\mazay75\\cpp-test-repo\\",
   "Documents": [
     {
@@ -9,6 +10,13 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\SERGSYSTH\\source\\repos\\mazay75\\cpp-test-repo\\\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u043D\u044B\u0435 \u043C\u0435\u0442\u043E\u0434\u044B. \u0423\u0440\u043E\u043A 10_v1.0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:\u041A\u043E\u043D\u0441\u0442\u0430\u043D\u0442\u043D\u044B\u0435 \u043C\u0435\u0442\u043E\u0434\u044B. \u0423\u0440\u043E\u043A 10_v1.0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+=======
+  "WorkspaceRootPath": "C:\\dev\\cpp-test-repo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\dev\\cpp-test-repo\\\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+>>>>>>> 3bb9595ec8818ada6995fd1e81f87ddcdc104dbd
     }
   ],
   "DocumentGroupContainers": [
@@ -23,6 +31,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< HEAD
               "Title": "CppProperties.json",
               "DocumentMoniker": "C:\\Users\\SERGSYSTH\\source\\repos\\mazay75\\cpp-test-repo\\CppProperties.json",
               "RelativeDocumentMoniker": "CppProperties.json",
@@ -49,6 +58,17 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+=======
+              "Title": "\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp",
+              "DocumentMoniker": "C:\\dev\\cpp-test-repo\\\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp",
+              "RelativeDocumentMoniker": "\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp",
+              "ToolTip": "C:\\dev\\cpp-test-repo\\\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp",
+              "RelativeToolTip": "\u041B\u044F\u043C\u0431\u0434\u0430-\u0444\u0443\u043D\u043A\u0446\u0438\u0438. \u041A\u043E\u043C\u043F\u0430\u0440\u0430\u0442\u043E\u0440 \u0434\u043B\u044F \u0441\u043E\u0440\u0442\u0438\u0440\u043E\u0432\u043A\u0438. \u0423\u0440\u043E\u043A 2 v1.0.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAHgAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-07-27T22:56:46.722Z",
+              "EditorCaption": ""
+>>>>>>> 3bb9595ec8818ada6995fd1e81f87ddcdc104dbd
             }
           ]
         }
